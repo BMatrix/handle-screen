@@ -1,12 +1,14 @@
 <template>
     <div>
-        <p>Dashboard</p>
+        <VariableVerticalTiles></VariableVerticalTiles>
     </div>
 </template>
 
 <script>
+import VariableVerticalTiles from '../components/VariableVerticalTiles.vue';
 export default {
     components:{
+        VariableVerticalTiles
     }
 }
 </script>
