@@ -1,9 +1,9 @@
 <template>
   <div>
-    <router-link to="/">
+    <router-link :to="{ name: 'dashboard' }">
       <img id="logo" src="assets/Logo.png" alt="logo" />
     </router-link>
-    <router-link to="/language">
+    <router-link :to="{ name: 'language' }">
       <img id="logo" src="assets/Language.png" alt="language" />
     </router-link>
   </div>
