@@ -1,10 +1,10 @@
 <template>
   <div>
     <router-link :to="{ name: 'dashboard' }">
-      <img id="logo" src="assets/Logo.png" alt="logo" />
+      <img id="logo" src="assets/placeholder-logo.png" alt="logo" />
     </router-link>
     <router-link :to="{ name: 'language' }">
-      <img id="logo" src="assets/Language.png" alt="language" />
+      <img id="logo" src="assets/placeholder-language-icon.png" alt="language" />
     </router-link>
   </div>
 </template>

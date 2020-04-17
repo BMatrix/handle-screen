@@ -1,36 +1,40 @@
 <template>
   <div class="grid">
     <!--Column 1-->
-    <Tile class="Tile1" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
-    <Tile class="Tile2" :icon="'assets/Placeholder.png'" :red="true">Lorem Ipsum</Tile>
-    <Tile class="Tile3" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
+    <IconTile class="Tile1" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
+    <IconTile class="Tile2" :icon="'assets/placeholder-icon.png'" :red="true">Lorem Ipsum</IconTile>
+    <IconTile class="Tile3" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Column 2-->
-    <Tile class="Tile4" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
-    <Tile class="Tile5" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
-    <Tile class="Tile6" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
+    <IconTile class="Tile4" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
+    <IconTile class="Tile5" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
+    <IconTile class="Tile6" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Column 3-->
-    <Tile class="Tile7" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
-    <Tile class="Tile8" :icon="'assets/Placeholder.png'" :red="true">Lorem Ipsum</Tile>
-    <Tile class="Tile9" :icon="'assets/Placeholder.png'">Lorem Ipsum</Tile>
+    <IconTile class="Tile7" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
+    <IconTile class="Tile8" :icon="'assets/placeholder-icon.png'" :red="true">Lorem Ipsum</IconTile>
+    <IconTile class="Tile9" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Bottom Row-->
-    <Tile
+    <TextTile
       class="Tile10"
       :title="'Lorem Ipsum'"
-    >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, tortor a faucibus faucibus.</Tile>
-    <Tile
+    >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, tortor a faucibus faucibus.</TextTile>
+    <TextTile
       class="Tile11"
       :title="'Lorem Ipsum'"
       :red="true"
-    >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, tortor a faucibus faucibus.</Tile>
-    <Tile class="Tile12" :centertitle="'Lorem Ipsum'" :button="true">Lorem Ipsum</Tile>
+    >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, tortor a faucibus faucibus.</TextTile>
+    <ButtonTile class="Tile12" :title="'Lorem Ipsum'" :routename="'food-drinks'">Lorem Ipsum</ButtonTile>
   </div>
 </template>
 
 <script>
-import Tile from "../components/Tile.vue";
+import IconTile from "../components/tiles/IconTile.vue";
+import TextTile from "../components/tiles/TextTile.vue";
+import ButtonTile from "../components/tiles/ButtonTile.vue";
 export default {
   components: {
-    Tile
+    IconTile,
+    TextTile,
+    ButtonTile
   }
 };
 </script>
@@ -43,8 +47,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 31%);
   grid-template-rows: repeat(17, 30px);
-  grid-column-gap: 20px;
-  grid-row-gap: 10px;
+  column-gap: 20px;
+  row-gap: 10px;
   background-color: transparent;
 }
 

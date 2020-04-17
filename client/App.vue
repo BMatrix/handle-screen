@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import NavBar from "../imports/ui/components/NavBar";
-import Dashboard from "../imports/ui/pages/Dashboard";
+import NavBar from "../imports/ui/components/NavBar.vue";
+import Dashboard from "../imports/ui/pages/Dashboard.vue";
 
 export default {
   Dashboard,
