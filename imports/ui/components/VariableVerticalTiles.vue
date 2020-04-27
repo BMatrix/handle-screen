@@ -2,7 +2,12 @@
   <div class="grid">
     <!--Column 1-->
     <IconTile class="Tile1" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
-    <IconTile class="Tile2" :icon="'assets/placeholder-icon.png'" :red="true">Lorem Ipsum</IconTile>
+    <IconTile
+      class="Tile2"
+      :icon="'assets/placeholder-icon.png'"
+      :routename="'food-drinks'"
+      :red="true"
+    >Food & Drinks</IconTile>
     <IconTile class="Tile3" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Column 2-->
     <IconTile class="Tile4" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
