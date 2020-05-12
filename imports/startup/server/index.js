@@ -1,1 +1,8 @@
-// Import server startup through a single index entry point
+import { Meteor } from 'meteor/meteor';
+
+import './api-load.ts';
+import './register-api.ts';
+
+Meteor.startup(() => {
+
+});

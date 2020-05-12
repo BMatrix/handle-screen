@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item" v-for="result in response.results" :key="result.id">
+    <div class="item" v-for="result in restaurants" :key="result.id">
       <div class="image">
         <img :src="result.icon" alt />
       </div>
@@ -8,24 +8,36 @@
         <p>{{ result.name }}</p>
       </div>
       <div class="rating">
-        <p>Rating: {{ result.rating }}</p>
+        <p v-if="result.rating" >Rating: {{ result.rating }}</p>
+        <p v-if="!result.rating" >No rating available</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { Convert, IResponse } from "../../api/IResponse.ts";
-import json from "../../api/PlaceholderResponse.json";
+<script lang="ts">
+import { Meteor } from "meteor/meteor";
+import { Restaurants } from "../../api/fooddrinks/restaurants/Restaurants";
+let subscription = Meteor.subscribe("fooddrinks.restaurants.all");
+
 export default {
+  data() {
+    return {
+      restaurants: []
+    };
+  },
   created() {
-    this.response = Convert.toIResponse(JSON.stringify(json));
+    if (subscription.ready()) {
+      this.restaurants = Restaurants.find().fetch();
+    } else {
+    }
   }
 };
 </script>
 
 <style scoped>
 .item {
+  overflow: scroll;
   margin-left: auto;
   margin-right: auto;
   width: 80%;

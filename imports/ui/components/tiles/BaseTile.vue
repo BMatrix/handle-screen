@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 .base {
-  transition: all 0.1s ease-in;
+    
   background-blend-mode: multiply;
 }
 .black {

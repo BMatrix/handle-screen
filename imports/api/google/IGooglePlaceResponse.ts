@@ -1,4 +1,6 @@
-export interface IResponse {
+import { Type, TypeExtra } from "./GooglePlaceParameters";
+
+export interface IGooglePlaceResponse {
     html_attributions: any[];
     next_page_token:   string;
     results:           IResult[];
@@ -6,21 +8,30 @@ export interface IResponse {
 }
 
 export interface IResult {
-    geometry:           IGeometry;
-    icon:               string;
-    id:                 string;
-    name:               string;
-    opening_hours:      IOpeningHours;
-    photos:             IPhoto[];
-    place_id:           string;
-    plus_code:          IPlusCode;
-    rating:             number;
-    reference:          string;
-    scope:              Scope;
-    types:              Type[];
-    user_ratings_total: number;
-    vicinity:           string;
-    price_level?:       number;
+    business_status?:    BusinessStatus;
+    geometry:            IGeometry;
+    icon:                string;
+    id:                  string;
+    name:                string;
+    opening_hours?:      IOpeningHours;
+    photos?:             IPhoto[];
+    place_id:            string;
+    plus_code:           IPlusCode;
+    rating?:             number;
+    reference:           string;
+    scope:               Scope;
+    types: (Type | TypeExtra)[];
+    user_ratings_total?: number;
+    vicinity:            string;
+    formatted_address?:  string;
+    permanently_closed?: boolean;
+    price_level?:        number;
+}
+
+export enum BusinessStatus {
+    ClosedPermanently = "CLOSED_PERMANENTLY",
+    ClosedTemporarily = "CLOSED_TEMPORARILY",
+    Operational = "OPERATIONAL",
 }
 
 export interface IGeometry {
@@ -58,26 +69,15 @@ export enum Scope {
     Google = "GOOGLE",
 }
 
-export enum Type {
-    Bar = "bar",
-    Establishment = "establishment",
-    Food = "food",
-    Lodging = "lodging",
-    Museum = "museum",
-    PointOfInterest = "point_of_interest",
-    Restaurant = "restaurant",
-    TravelAgency = "travel_agency",
-}
-
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toIResponse(json: string): IResponse {
-        return cast(JSON.parse(json), r("IResponse"));
+    public static toIGooglePlaceResponse(json: string): IGooglePlaceResponse {
+        return cast(JSON.parse(json), r("IGooglePlaceResponse"));
     }
 
-    public static iResponseToJson(value: IResponse): string {
-        return JSON.stringify(uncast(value, r("IResponse")), null, 2);
+    public static iGooglePlaceResponseToJson(value: IGooglePlaceResponse): string {
+        return JSON.stringify(uncast(value, r("IGooglePlaceResponse")), null, 2);
     }
 }
 
@@ -211,27 +211,30 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "IResponse": o([
+    "IGooglePlaceResponse": o([
         { json: "html_attributions", js: "html_attributions", typ: a("any") },
         { json: "next_page_token", js: "next_page_token", typ: "" },
         { json: "results", js: "results", typ: a(r("IResult")) },
         { json: "status", js: "status", typ: "" },
     ], false),
     "IResult": o([
+        { json: "business_status", js: "business_status", typ: u(undefined, r("BusinessStatus")) },
         { json: "geometry", js: "geometry", typ: r("IGeometry") },
         { json: "icon", js: "icon", typ: "" },
         { json: "id", js: "id", typ: "" },
         { json: "name", js: "name", typ: "" },
-        { json: "opening_hours", js: "opening_hours", typ: r("IOpeningHours") },
-        { json: "photos", js: "photos", typ: a(r("IPhoto")) },
+        { json: "opening_hours", js: "opening_hours", typ: u(undefined, r("IOpeningHours")) },
+        { json: "photos", js: "photos", typ: u(undefined, a(r("IPhoto"))) },
         { json: "place_id", js: "place_id", typ: "" },
         { json: "plus_code", js: "plus_code", typ: r("IPlusCode") },
-        { json: "rating", js: "rating", typ: 3.14 },
+        { json: "rating", js: "rating", typ: u(undefined, 3.14) },
         { json: "reference", js: "reference", typ: "" },
         { json: "scope", js: "scope", typ: r("Scope") },
         { json: "types", js: "types", typ: a(r("Type")) },
-        { json: "user_ratings_total", js: "user_ratings_total", typ: 0 },
+        { json: "user_ratings_total", js: "user_ratings_total", typ: u(undefined, 0) },
         { json: "vicinity", js: "vicinity", typ: "" },
+        { json: "formatted_address", js: "formatted_address", typ: u(undefined, "") },
+        { json: "permanently_closed", js: "permanently_closed", typ: u(undefined, true) },
         { json: "price_level", js: "price_level", typ: u(undefined, 0) },
     ], false),
     "IGeometry": o([
@@ -259,17 +262,154 @@ const typeMap: any = {
         { json: "compound_code", js: "compound_code", typ: "" },
         { json: "global_code", js: "global_code", typ: "" },
     ], false),
+    "BusinessStatus": [
+        "CLOSED_PERMANENTLY",
+        "CLOSED_TEMPORARILY",
+        "OPERATIONAL",
+    ],
     "Scope": [
         "GOOGLE",
     ],
     "Type": [
+        "accounting",
+        "airport",
+        "amusement_park",
+        "aquarium",
+        "art_gallery",
+        "atm",
+        "bakery",
+        "bank",
         "bar",
-        "establishment",
-        "food",
+        "beauty_salon",
+        "bicycle_store",
+        "book_store",
+        "bowling_alley",
+        "bus_station",
+        "cafe",
+        "campground",
+        "car_dealer",
+        "car_rental",
+        "car_repair",
+        "car_wash",
+        "casino",
+        "cemetery",
+        "church",
+        "city_hall",
+        "clothing_store",
+        "convenience_store",
+        "courthouse",
+        "dentist",
+        "department_store",
+        "doctor",
+        "drugstore",
+        "electrician",
+        "electronics_store",
+        "embassy",
+        "fire_station",
+        "florist",
+        "funeral_home",
+        "furniture_store",
+        "gas_station",
+        "grocery_or_supermarket",
+        "gym",
+        "hair_care",
+        "hardware_store",
+        "hindu_temple",
+        "home_goods_store",
+        "hospital",
+        "insurance_agency",
+        "jewelry_store",
+        "laundry",
+        "lawyer",
+        "library",
+        "light_rail_station",
+        "liquor_store",
+        "local_government_office",
+        "locksmith",
         "lodging",
+        "meal_delivery",
+        "meal_takeaway",
+        "mosque",
+        "movie_rental",
+        "movie_theater",
+        "moving_company",
         "museum",
-        "point_of_interest",
+        "night_club",
+        "painter",
+        "park",
+        "parking",
+        "pet_store",
+        "pharmacy",
+        "physiotherapist",
+        "plumber",
+        "police",
+        "post_office",
+        "primary_school",
+        "real_estate_agency",
         "restaurant",
+        "roofing_contractor",
+        "rv_park",
+        "school",
+        "secondary_school",
+        "shoe_store",
+        "shopping_mall",
+        "spa",
+        "stadium",
+        "storage",
+        "store",
+        "subway_station",
+        "supermarket",
+        "synagogue",
+        "taxi_stand",
+        "tourist_attraction",
+        "train_station",
+        "transit_station",
         "travel_agency",
+        "university",
+        "veterinary_care",
+        "zoo",
+
+        "administrative_area_level_1",
+        "administrative_area_level_2",
+        "administrative_area_level_3",
+        "administrative_area_level_4",
+        "administrative_area_level_5",
+        "archipelago",
+        "colloquial_area",
+        "continent",
+        "country",
+        "establishment",
+        "finance",
+        "floor",
+        "food",
+        "general_contractor",
+        "geocode",
+        "health",
+        "intersection",
+        "locality",
+        "natural_feature",
+        "neighborhood",
+        "place_of_worship",
+        "plus_code",
+        "point_of_interest",
+        "political",
+        "post_box",
+        "postal_code",
+        "postal_code_prefix",
+        "postal_code_suffix",
+        "postal_town",
+        "premise",
+        "room",
+        "route",
+        "street_address",
+        "street_number",
+        "sublocality",
+        "sublocality_level_1",
+        "sublocality_level_2",
+        "sublocality_level_3",
+        "sublocality_level_4",
+        "sublocality_level_5",
+        "subpremise",
+        "town_square"
     ],
 };
