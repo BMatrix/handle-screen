@@ -5,7 +5,8 @@ Vue.use(VueRouter);
 import Dashboard from "../../ui/pages/Dashboard.vue";
 import Language from "../../ui/pages/Language.vue";
 import FoodDrinks from "../../ui/pages/FoodDrinks.vue";
-import Restaurants from "../../ui/pages/Restaurants.vue";
+import Restaurants from "../../ui/pages/fooddrinks/Restaurants.vue";
+import Bars from "../../ui/pages/fooddrinks/Bars.vue";
 
 export default new VueRouter({
     mode: "history",
@@ -29,6 +30,11 @@ export default new VueRouter({
             path: '/category/food-drinks/restaurants',
             name: 'restaurants',
             component: Restaurants
+        },
+        {
+            path: '/category/food-drinks/bars',
+            name: 'bars',
+            component: Bars
         }
     ]
 });

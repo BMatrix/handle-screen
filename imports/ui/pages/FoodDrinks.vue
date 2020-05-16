@@ -11,7 +11,8 @@
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
           :red="true"
-        >Lorem Ipsum</IconTile>
+          :routename="'bars'"
+        >Bars</IconTile>
       </Row>
       <Row :height="'100%'" :gap="'10px'">
         <IconTile

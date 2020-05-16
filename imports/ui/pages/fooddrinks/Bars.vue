@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item" v-for="result in restaurants" :key="result.id">
+    <div class="item" v-for="result in bars" :key="result.id">
       <div class="image">
         <img :src="result.icon" alt />
       </div>
@@ -17,18 +17,18 @@
 
 <script lang="ts">
 import { Meteor } from "meteor/meteor";
-import { Restaurants } from "../../api/fooddrinks/restaurants/Restaurants";
-let subscription = Meteor.subscribe("fooddrinks.restaurants.all");
+import { Bars } from "../../../api/fooddrinks/bars/Bars";
+let subscription = Meteor.subscribe("fooddrinks.bars.all");
 
 export default {
   data() {
     return {
-      restaurants: []
+      bars: []
     };
   },
   created() {
     if (subscription.ready()) {
-      this.restaurants = Restaurants.find().fetch();
+      this.bars = Bars.find().fetch();
     } else {
     }
   }
