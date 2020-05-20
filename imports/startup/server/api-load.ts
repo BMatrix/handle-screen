@@ -6,6 +6,9 @@ import '../../api/management/collections/Methods';
 Meteor.call('fooddrinks.restaurants.startup');
 Meteor.call('fooddrinks.bars.startup');
 
+//Meteor.call('fooddrinks.restaurants.update');
+//Meteor.call('fooddrinks.bars.update');
+    
 //Meteor.call('fooddrinks.restaurants.clear');
 //Meteor.call('fooddrinks.bars.clear');
 //Meteor.call('management.collections.clear');
