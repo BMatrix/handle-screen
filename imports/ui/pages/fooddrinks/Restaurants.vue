@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Meteor } from "meteor/meteor";
-import { Restaurants } from "../../../api/fooddrinks/restaurants/Restaurants";
+import { Restaurants } from "../../../api/fooddrinks/FoodDrinks";
 import List from "../../components/List.vue";
 let subscription = Meteor.subscribe("fooddrinks.restaurants.all");
 
