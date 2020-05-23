@@ -1,31 +1,58 @@
 import { Meteor } from 'meteor/meteor';
-import { Bars, Restaurants } from './FoodDrinks';
+import { Bakeries, Bars, Coffeeshops, Restaurants, Supermarkets } from './FoodDrinks';
 import { Query } from '../google/Methods';
 import { Type } from '../google/GooglePlaceParameters';
 import { startup, update, clear, placeholder } from '../management/collections/Actions';
 
 export enum Collections {
+  Bakeries,
   Bars,
-  Restaurants
+  Coffeeshops,
+  Restaurants,
+  Supermarkets
 }
 
-let barQuery: Query = {
+let bakeriesQuery: Query = {
+  type: Type.bakery
+}
+let barsQuery: Query = {
   type: Type.bar
+}
+let coffeeshopsQuery: Query = {
+  keyword: "coffeeshop"
 }
 let restaurantsQuery: Query = {
   type: Type.restaurant
 }
+let supermarketsQuery: Query = {
+  type: Type.grocery_or_supermarket
+}
 
 let collectionDetails = [
   {
+    name: Collections.Bakeries,
+    collection: Bakeries,
+    query: bakeriesQuery
+  },
+  {
     name: Collections.Bars,
     collection: Bars,
-    query: barQuery
+    query: barsQuery
+  },
+  {
+    name: Collections.Coffeeshops,
+    collection: Coffeeshops,
+    query: coffeeshopsQuery
   },
   {
     name: Collections.Restaurants,
     collection: Restaurants,
     query: restaurantsQuery
+  },
+  {
+    name: Collections.Supermarkets,
+    collection: Supermarkets,
+    query: supermarketsQuery
   }
 ]
 

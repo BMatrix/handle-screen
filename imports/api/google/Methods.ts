@@ -6,7 +6,7 @@ import { Type } from "./GooglePlaceParameters";
 const client = new Client({});
 let latitude: number = 51.219106;
 let longitude: number = 4.401615;
-let radius: number = 100;
+let radius: number = 150; //meters
 
 interface LooseObject {
     [key: string]: any

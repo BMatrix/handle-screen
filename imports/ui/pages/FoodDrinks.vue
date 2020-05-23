@@ -5,8 +5,8 @@
         <IconTile
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
-          :routename="'restaurants'"
-        >Restaurants</IconTile>
+          :routename="'bakeries'"
+        >Bakeries</IconTile>
         <IconTile
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
@@ -19,17 +19,20 @@
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
           :red="true"
-        >Lorem Ipsum</IconTile>
+          :routename="'coffeeshops'"
+        >Coffeeshops</IconTile>
         <IconTile
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
-        >Lorem Ipsum</IconTile>
+          :routename="'restaurants'"
+        >Restaurants</IconTile>
       </Row>
       <Row :height="'100%'" :gap="'10px'">
         <IconTile
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
-        >Lorem Ipsum</IconTile>
+          :routename="'supermarkets'"
+        >Supermarkets</IconTile>
         <IconTile
           :image="'../assets/placeholder-background.jpg'"
           icon="../assets/placeholder-icon.png"
