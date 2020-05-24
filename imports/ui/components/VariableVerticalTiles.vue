@@ -8,14 +8,19 @@
       :routename="'food-drinks'"
       :red="true"
     >Food & Drinks</IconTile>
-    <IconTile class="Tile3" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
+    <IconTile class="Tile3" :icon="'assets/placeholder-icon.png'" :routename="'museums'">Museums</IconTile>
     <!--Column 2-->
     <IconTile class="Tile4" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <IconTile class="Tile5" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <IconTile class="Tile6" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Column 3-->
     <IconTile class="Tile7" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
-    <IconTile class="Tile8" :icon="'assets/placeholder-icon.png'" :red="true">Lorem Ipsum</IconTile>
+    <IconTile
+      class="Tile8"
+      :icon="'assets/placeholder-icon.png'"
+      :red="true"
+      :routename="'healthcare'"
+    >Healthcare</IconTile>
     <IconTile class="Tile9" :icon="'assets/placeholder-icon.png'">Lorem Ipsum</IconTile>
     <!--Bottom Row-->
     <TextTile

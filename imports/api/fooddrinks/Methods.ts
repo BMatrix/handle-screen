@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Bakeries, Bars, Coffeeshops, Restaurants, Supermarkets } from './FoodDrinks';
 import { Query } from '../google/Methods';
 import { Type } from '../google/GooglePlaceParameters';
-import { startup, update, clear, placeholder } from '../management/collections/Actions';
+import { startup, update, clear, placeholder, ICollectionMethodDetails } from '../management/collections/Actions';
 
 export enum Collections {
   Bakeries,
@@ -28,7 +28,7 @@ let supermarketsQuery: Query = {
   type: Type.grocery_or_supermarket
 }
 
-let collectionDetails = [
+let collectionMethodDetails: ICollectionMethodDetails[] = [
   {
     name: Collections.Bakeries,
     collection: Bakeries,
@@ -59,39 +59,19 @@ let collectionDetails = [
 Meteor.methods({
   'fooddrinks.startup'(collection: Collections) {
     this.unblock();
-    for (let i = 0; i < collectionDetails.length; i++) {
-      let collectionDetail = collectionDetails[i];
-      if (collectionDetail.name == collection) {
-        startup(collectionDetail.collection, collectionDetail.query)
-      }
-    }
+    startup(collectionMethodDetails, collection);
   },
 
-  async 'fooddrinks.update'(collection: Collections) {
+  'fooddrinks.update'(collection: Collections) {
     this.unblock();
-    for (let i = 0; i < collectionDetails.length; i++) {
-      let collectionDetail = collectionDetails[i];
-      if (collectionDetail.name == collection) {
-        update(collectionDetail.collection, collectionDetail.query)
-      }
-    }
+    update(collectionMethodDetails, collection);
   },
 
   'fooddrinks.clear'(collection: Collections) {
-    for (let i = 0; i < collectionDetails.length; i++) {
-      let collectionDetail = collectionDetails[i];
-      if (collectionDetail.name == collection) {
-        clear(collectionDetail.collection)
-      }
-    }
+    clear(collectionMethodDetails, collection);
   },
 
   'fooddrinks.placeholder'(collection: Collections) {
-    for (let i = 0; i < collectionDetails.length; i++) {
-      let collectionDetail = collectionDetails[i];
-      if (collectionDetail.name == collection) {
-        placeholder(collectionDetail.collection)
-      }
-    }
+    placeholder(collectionMethodDetails, collection);
   },
 });
