@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Bakeries, Bars, Coffeeshops, Restaurants, Supermarkets } from './FoodDrinks';
-import { Query } from '../google/Methods';
-import { Type } from '../google/GooglePlaceParameters';
+import { PlacesQuery } from '../apis/google/Methods';
+import { Type } from '../apis/google/GooglePlaceParameters';
 import { startup, update, clear, placeholder, ICollectionMethodDetails } from '../management/collections/Actions';
 
 export enum Collections {
@@ -12,19 +12,19 @@ export enum Collections {
   Supermarkets
 }
 
-let bakeriesQuery: Query = {
+let bakeriesQuery: PlacesQuery = {
   type: Type.bakery
 }
-let barsQuery: Query = {
+let barsQuery: PlacesQuery = {
   type: Type.bar
 }
-let coffeeshopsQuery: Query = {
+let coffeeshopsQuery: PlacesQuery = {
   keyword: "coffeeshop"
 }
-let restaurantsQuery: Query = {
+let restaurantsQuery: PlacesQuery = {
   type: Type.restaurant
 }
-let supermarketsQuery: Query = {
+let supermarketsQuery: PlacesQuery = {
   type: Type.grocery_or_supermarket
 }
 
@@ -32,27 +32,27 @@ let collectionMethodDetails: ICollectionMethodDetails[] = [
   {
     name: Collections.Bakeries,
     collection: Bakeries,
-    query: bakeriesQuery
+    placesQuery: bakeriesQuery
   },
   {
     name: Collections.Bars,
     collection: Bars,
-    query: barsQuery
+    placesQuery: barsQuery
   },
   {
     name: Collections.Coffeeshops,
     collection: Coffeeshops,
-    query: coffeeshopsQuery
+    placesQuery: coffeeshopsQuery
   },
   {
     name: Collections.Restaurants,
     collection: Restaurants,
-    query: restaurantsQuery
+    placesQuery: restaurantsQuery
   },
   {
     name: Collections.Supermarkets,
     collection: Supermarkets,
-    query: supermarketsQuery
+    placesQuery: supermarketsQuery
   }
 ]
 

@@ -1,14 +1,11 @@
 import { HTTP } from "meteor/http";
+import { LooseObject } from "./LooseObject";
 
 export enum Request {
     GET = "GET",
     POST = "POST",
     PUT = "PUT",
     DEL = "DEL",
-}
-
-interface LooseObject {
-    [key: string]: any
 }
 
 export function HttpRequest(request: Request, url: string, params?: object, data?: object, headers?: object): any {

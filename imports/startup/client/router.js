@@ -24,6 +24,14 @@ import CityTours from "../../ui/pages/museums/CityTours.vue";
 import History from "../../ui/pages/museums/History.vue";
 import Science from "../../ui/pages/museums/Science.vue";
 
+import Sports from "../../ui/pages/Sports.vue";
+import BasketballCourts from "../../ui/pages/sports/BasketballCourts.vue";
+import FootballCourts from "../../ui/pages/sports/FootballCourts.vue";
+import Gyms from "../../ui/pages/sports/Gyms.vue";
+import RunningTracks from "../../ui/pages/sports/RunningTracks.vue";
+import SwimmingPools from "../../ui/pages/sports/SwimmingPools.vue";
+import YogaStudios from "../../ui/pages/sports/YogaStudios.vue";
+
 
 export default new VueRouter({
     mode: "history",
@@ -126,6 +134,44 @@ export default new VueRouter({
             path: '/category/museums/science',
             name: 'science',
             component: Science
+        },
+
+
+
+        {
+            path: '/category/sports',
+            name: 'sports',
+            component: Sports
+        },
+        {
+            path: '/category/sports/basketball-courts',
+            name: 'basketball-courts',
+            component: BasketballCourts
+        },
+        {
+            path: '/category/sports/football-courts',
+            name: 'football-courts',
+            component: FootballCourts
+        },
+        {
+            path: '/category/sports/gyms',
+            name: 'gyms',
+            component: Gyms
+        },
+        {
+            path: '/category/sports/running-tracks',
+            name: 'running-tracks',
+            component: RunningTracks
+        },
+        {
+            path: '/category/sports/swimming-pools',
+            name: 'swimming-pools',
+            component: SwimmingPools
+        },
+        {
+            path: '/category/sports/yoga-studios',
+            name: 'yoga-studios',
+            component: YogaStudios
         }
     ]
 });

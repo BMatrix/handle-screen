@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Doctors, Hospitals, Pharmacies, Psychologists } from './Healthcare';
-import { Query } from '../google/Methods';
-import { Type } from '../google/GooglePlaceParameters';
+import { PlacesQuery } from '../apis/google/Methods';
+import { Type } from '../apis/google/GooglePlaceParameters';
 import { startup, update, clear, placeholder, ICollectionMethodDetails } from '../management/collections/Actions';
 
 export enum Collections {
@@ -11,16 +11,16 @@ export enum Collections {
   Psychologists
 }
 
-let doctorsQuery: Query = {
+let doctorsQuery: PlacesQuery = {
   type: Type.doctor
 }
-let hospitalsQuery: Query = {
+let hospitalsQuery: PlacesQuery = {
   type: Type.hospital
 }
-let pharmaciesQuery: Query = {
+let pharmaciesQuery: PlacesQuery = {
   type: Type.pharmacy
 }
-let psychologistsQuery: Query = {
+let psychologistsQuery: PlacesQuery = {
   keyword: "psychologist"
 }
 
@@ -28,22 +28,22 @@ let collectionMethodDetails: ICollectionMethodDetails[] = [
   {
     name: Collections.Doctors,
     collection: Doctors,
-    query: doctorsQuery
+    placesQuery: doctorsQuery
   },
   {
     name: Collections.Hospitals,
     collection: Hospitals,
-    query: hospitalsQuery
+    placesQuery: hospitalsQuery
   },
   {
     name: Collections.Pharmacies,
     collection: Pharmacies,
-    query: pharmaciesQuery
+    placesQuery: pharmaciesQuery
   },
   {
     name: Collections.Psychologists,
     collection: Psychologists,
-    query: psychologistsQuery
+    placesQuery: psychologistsQuery
   }
 ]
 

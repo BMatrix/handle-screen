@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Arts, CityTours, History, Science } from './Museums';
-import { Query } from '../google/Methods';
-import { Type } from '../google/GooglePlaceParameters';
+import { PlacesQuery } from '../apis/google/Methods';
+import { Type } from '../apis/google/GooglePlaceParameters';
 import { startup, update, clear, placeholder, ICollectionMethodDetails } from '../management/collections/Actions';
 
 export enum Collections {
@@ -11,18 +11,18 @@ export enum Collections {
   Science
 }
 
-let artsQuery: Query = {
+let artsQuery: PlacesQuery = {
   type: Type.museum,
   keyword: "art"
 }
-let cityToursQuery: Query = {
+let cityToursQuery: PlacesQuery = {
   keyword: "city tour"
 }
-let historyQuery: Query = {
+let historyQuery: PlacesQuery = {
   type: Type.museum,
   keyword: "history"
 }
-let scienceQuery: Query = {
+let scienceQuery: PlacesQuery = {
   type: Type.museum,
   keyword: "science"
 }
@@ -31,22 +31,22 @@ let collectionMethodDetails: ICollectionMethodDetails[] = [
   {
     name: Collections.Arts,
     collection: Arts,
-    query: artsQuery
+    placesQuery: artsQuery
   },
   {
     name: Collections.CityTours,
     collection: CityTours,
-    query: cityToursQuery
+    placesQuery: cityToursQuery
   },
   {
     name: Collections.History,
     collection: History,
-    query: historyQuery
+    placesQuery: historyQuery
   },
   {
     name: Collections.Science,
     collection: Science,
-    query: scienceQuery
+    placesQuery: scienceQuery
   },
 ]
 

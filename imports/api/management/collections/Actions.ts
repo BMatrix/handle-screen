@@ -1,8 +1,14 @@
 import { Mongo } from 'meteor/mongo';
 import { Collections } from './Collections';
 import { json } from './PlaceholderResponse';
-import { GooglePlaceSearch, Query } from '../../google/Methods';
+
+import { GooglePlaceSearch, PlacesQuery } from '../../apis/google/Methods';
 import { PlacesNearbyResponse, Place } from '@googlemaps/google-maps-services-js';
+
+import { AntwerpQuery, AntwerpGetData, AntwerpInterfaces } from '../../apis/antwerp/Methods';
+import { IAntwerpPublicSportsTerrain, Feature as a } from '../../apis/antwerp/IAntwerpPublicSportsTerrain';
+import { IAntwerpRunningTrack, Feature as b } from '../../apis/antwerp/IAntwerpRunningTrack';
+import { IAntwerpSwimmingPool, Feature as c } from '../../apis/antwerp/IAntwerpSwimmingPool';
 
 let daysBeforeUpdate = 0;
 
@@ -15,23 +21,54 @@ interface IManagementCollectionDetails {
 export interface ICollectionMethodDetails {
   name: number,
   collection: Mongo.Collection<unknown>,
-  query: Query
+  placesQuery?: PlacesQuery,
+  antwerpQuery?: AntwerpQuery,
 }
 
-async function updateCollection(collection: Mongo.Collection<unknown>, query: Query) {
-  let data = await GooglePlaceSearch(query);
+function actualManagementCollection(collection: Mongo.Collection<unknown>, next_page_token?: string) {
+  let shortCollectionNamespace: string = getShortCollectionNamespace(collection);
+  let collectionData: IManagementCollectionDetails = {
+    collection: getShortCollectionNamespace(collection),
+    next_page_token: next_page_token,
+    last_updated: new Date()
+  }
+  Collections.upsert({ collection: shortCollectionNamespace }, { $set: collectionData });
+}
 
-  if (data != null) {
-    let response: PlacesNearbyResponse = data;
-    response.data.results.forEach((item: Place) => { collection.upsert({ place_id: item.place_id }, { $set: item }) })
+async function updateCollection(collection: Mongo.Collection<unknown>, placesQuery?: PlacesQuery, antwerpQuery?: AntwerpQuery) {
+  if (placesQuery != undefined) {
+    let response = await GooglePlaceSearch(placesQuery);
 
-    let shortCollectionNamespace: string = getShortCollectionNamespace(collection);
-    let collectionData: IManagementCollectionDetails = {
-      collection: getShortCollectionNamespace(collection),
-      next_page_token: response.data.next_page_token,
-      last_updated: new Date()
+    if (response != null) {
+      let data: PlacesNearbyResponse = response;
+      actualManagementCollection(collection, data.data.next_page_token);
+
+      data.data.results.forEach((item: Place) => { collection.upsert({ place_id: item.place_id }, { $set: item }) });
     }
-    Collections.upsert({ collection: shortCollectionNamespace }, { $set: collectionData });
+  }
+  else if (antwerpQuery != undefined) {
+    let response = await AntwerpGetData(antwerpQuery);
+
+    if (response != null) {
+      actualManagementCollection(collection)
+      switch (antwerpQuery.interface) {
+        case AntwerpInterfaces.PublicSportsTerrain:
+          let publicSportsTerrain: IAntwerpPublicSportsTerrain = response;
+          publicSportsTerrain.features.forEach((item: a) => { collection.upsert({ attributes: { GISID: item.attributes.GISID } }, { $set: item }) });
+          break;
+        case AntwerpInterfaces.RunningTrack:
+          let runningTrack: IAntwerpRunningTrack = response;
+          runningTrack.features.forEach((item: b) => { collection.upsert({ attributes: { GISID: item.attributes.GISID } }, { $set: item }) });
+          break;
+        case AntwerpInterfaces.SwimmingPool:
+          let swimmingPool: IAntwerpSwimmingPool = response;
+          swimmingPool.features.forEach((item: c) => { collection.upsert({ attributes: { GISID: item.attributes.id } }, { $set: item }) });
+          break;
+        default:
+          return null;
+          break;
+      }
+    }
   }
 }
 
@@ -41,7 +78,7 @@ export function startup(collectionMethodDetails: ICollectionMethodDetails[], col
     let collectionMethodDetail = collectionMethodDetails[i];
     if (collectionMethodDetail.name == collection) {
       if (collectionMethodDetail.collection.find().count() == 0) {
-        updateCollection(collectionMethodDetail.collection, collectionMethodDetail.query);
+        updateCollection(collectionMethodDetail.collection, collectionMethodDetail.placesQuery, collectionMethodDetail.antwerpQuery);
       }
     }
   }
@@ -58,7 +95,7 @@ export async function update(collectionMethodDetails: ICollectionMethodDetails[]
         let date2: Date = new Date();
         let diff: number = date2.valueOf() - date1.valueOf();
         if (diff / 1000 / 60 / 60 / 24 >= daysBeforeUpdate) {
-          updateCollection(collectionMethodDetail.collection, collectionMethodDetail.query);
+          updateCollection(collectionMethodDetail.collection, collectionMethodDetail.placesQuery, collectionMethodDetail.antwerpQuery);
         }
       }
     }

@@ -2,23 +2,20 @@ import { Client, PlacesNearbyResponse, Language } from "@googlemaps/google-maps-
 import { key } from './GooglePlacesApiKey';
 import { PlacesNearbyRanking } from '@googlemaps/google-maps-services-js/dist/places/placesnearby';
 import { Type } from "./GooglePlaceParameters";
+import { LooseObject } from "../../LooseObject";
 
 const client = new Client({});
 let latitude: number = 51.219106;
 let longitude: number = 4.401615;
 let radius: number = 150; //meters
 
-interface LooseObject {
-    [key: string]: any
-}
-
-export interface Query {
+export interface PlacesQuery {
     keyword?: string,
     type?: Type,
     pagetoken?: string
 }
 
-export async function GooglePlaceSearch(query: Query): Promise<PlacesNearbyResponse | null> {
+export async function GooglePlaceSearch(query: PlacesQuery): Promise<PlacesNearbyResponse | null> {
     let parameters: LooseObject = {
         key: key,
         radius: radius,
