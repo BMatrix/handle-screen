@@ -14,7 +14,7 @@
     "isomorphic-form-data": "^2.0.0",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "recursive-lowercase-json": "^0.2.0",
     "vue": "^2.6.11",
     "vue-meteor-tracker": "^2.0.0-beta.5",
